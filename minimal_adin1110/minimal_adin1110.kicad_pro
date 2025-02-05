@@ -38,8 +38,8 @@
         "other_text_upright": false,
         "pads": {
           "drill": 0.0,
-          "height": 3.6068,
-          "width": 3.6068
+          "height": 1.47,
+          "width": 0.74
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -479,6 +479,7 @@
       "/AVDD_H": "rgb(0, 132, 0)",
       "/AVDD_L": "rgb(0, 132, 132)",
       "/DLDO_1P1": "rgb(132, 0, 132)",
+      "/DVDD_1P1": "rgb(204, 102, 0)",
       "GND": "rgb(72, 72, 72)"
     },
     "netclass_assignments": null,
