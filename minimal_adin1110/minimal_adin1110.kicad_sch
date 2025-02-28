@@ -4459,6 +4459,90 @@
 				)
 			)
 		)
+		(symbol "UNITED_NO_COMPONENTS_DATA_BASE:Fiducial"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "FID"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "Fiducial"
+				(at 0 3.175 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "no_components_footprints:Fiducial_0.5mm_Mask1mm"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "Description" "Fiducial Marker"
+				(at 0 -5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "fiducial marker"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Fiducial*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Fiducial_0_1"
+				(circle
+					(center 0 0)
+					(radius 1.27)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+		)
 		(symbol "UNITED_RESISTORS_DATA_BASE:R_ERJ-2GEJ472X"
 			(pin_names
 				(offset 0.254)
@@ -10507,6 +10591,73 @@
 		)
 	)
 	(symbol
+		(lib_id "UNITED_NO_COMPONENTS_DATA_BASE:Fiducial")
+		(at 381 127 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0b733443-f58c-4306-ab04-46b063895f7d")
+		(property "Reference" "FID3"
+			(at 383.54 125.7299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Fiducial"
+			(at 383.54 128.2699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "no_components_footprints:Fiducial_0.5mm_Mask1mm"
+			(at 381 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 381 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "Fiducial Marker"
+			(at 381 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "minimal_adin1110"
+				(path "/26ddf1b8-aee4-468d-a26c-7bd63f3a2989"
+					(reference "FID3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "UNITED_IC_ADI:U_ADIN1110CCPZ")
 		(at 203.2 152.4 0)
 		(unit 1)
@@ -13756,7 +13907,7 @@
 	)
 	(symbol
 		(lib_id "UNITED_CONNECTORS_DATA_BASE:J_CLP-102-02-G-D-BE")
-		(at 330.2 148.59 270)
+		(at 330.2 148.59 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -13770,7 +13921,7 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Value" "CLP-102-02-G-D-BE"
@@ -13779,11 +13930,11 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Footprint" "connector_footprints:CLP-102-02-G-D-BE"
-			(at 322.58 153.67 0)
+			(at 337.82 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13794,7 +13945,7 @@
 			)
 		)
 		(property "Datasheet" "https://suddendocs.samtec.com/catalog_english/clp_sm.pdf?_gl=1*1y4jlr9*_gcl_au*MTM0MTYyNTQ5MS4xNzM2MDk5MTUz*_ga*MTYxNDYyMTQ0Mi4xNzM2MDk5MTUz*_ga_3KFNZC07WW*MTczNjY4MDQ4OS4xNS4xLjE3MzY2ODEzNzcuNjAuMC4w"
-			(at 320.04 153.67 0)
+			(at 340.36 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13805,7 +13956,7 @@
 			)
 		)
 		(property "Description" "Samtec CLP-1xx-02-G-D-BE series,  2 positions connector,  1.27 mm pitch,  Black,  Vertical mounting,  5.2 A,  300 V,  Through Hole,  Tin plated"
-			(at 317.5 153.67 0)
+			(at 342.9 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13816,7 +13967,7 @@
 			)
 		)
 		(property "Color" "Black"
-			(at 314.96 153.67 0)
+			(at 345.44 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13827,7 +13978,7 @@
 			)
 		)
 		(property "Contact Plating" "Tin"
-			(at 312.42 153.67 0)
+			(at 347.98 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13838,7 +13989,7 @@
 			)
 		)
 		(property "Current Rating (A)" "5.2"
-			(at 309.88 153.67 0)
+			(at 350.52 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13849,7 +14000,7 @@
 			)
 		)
 		(property "MPN" "CLP-102-02-G-D-BE"
-			(at 307.34 153.67 0)
+			(at 353.06 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13860,7 +14011,7 @@
 			)
 		)
 		(property "Manufacturer" "Samtec"
-			(at 304.8 153.67 0)
+			(at 355.6 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13871,7 +14022,7 @@
 			)
 		)
 		(property "Mounting Angle" "Vertical"
-			(at 302.26 153.67 0)
+			(at 358.14 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13882,7 +14033,7 @@
 			)
 		)
 		(property "Mounting Style" "Through Hole"
-			(at 299.72 153.67 0)
+			(at 360.68 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13893,7 +14044,7 @@
 			)
 		)
 		(property "Number of Rows" "2"
-			(at 297.18 153.67 0)
+			(at 363.22 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13904,7 +14055,7 @@
 			)
 		)
 		(property "Pin Count" "2"
-			(at 294.64 153.67 0)
+			(at 365.76 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13915,7 +14066,7 @@
 			)
 		)
 		(property "Pitch (mm)" "1.27"
-			(at 292.1 153.67 0)
+			(at 368.3 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13926,7 +14077,7 @@
 			)
 		)
 		(property "Series" "CLP-1xx-02-G-D-BE"
-			(at 289.56 153.67 0)
+			(at 370.84 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13937,7 +14088,7 @@
 			)
 		)
 		(property "Symbol Name" "J_CLP-102-02-G-D-BE"
-			(at 287.02 153.67 0)
+			(at 373.38 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13948,7 +14099,7 @@
 			)
 		)
 		(property "Trustedparts Search" "https://www.trustedparts.com/en/search/CLP-102-02-G-D-BE"
-			(at 284.48 153.67 0)
+			(at 375.92 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -13959,7 +14110,7 @@
 			)
 		)
 		(property "Voltage Rating (V)" "300"
-			(at 281.94 153.67 0)
+			(at 378.46 143.51 0)
 			(show_name yes)
 			(effects
 				(font
@@ -18022,6 +18173,73 @@
 		)
 	)
 	(symbol
+		(lib_id "UNITED_NO_COMPONENTS_DATA_BASE:Fiducial")
+		(at 368.3 127 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c6e5b934-4404-4be8-baeb-6f695b66132a")
+		(property "Reference" "FID2"
+			(at 370.84 125.7299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Fiducial"
+			(at 370.84 128.2699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "no_components_footprints:Fiducial_0.5mm_Mask1mm"
+			(at 368.3 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 368.3 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "Fiducial Marker"
+			(at 368.3 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "minimal_adin1110"
+				(path "/26ddf1b8-aee4-468d-a26c-7bd63f3a2989"
+					(reference "FID2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 175.26 107.95 0)
 		(unit 1)
@@ -20439,6 +20657,73 @@
 			(project "minimal_adin1110"
 				(path "/26ddf1b8-aee4-468d-a26c-7bd63f3a2989"
 					(reference "R9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "UNITED_NO_COMPONENTS_DATA_BASE:Fiducial")
+		(at 355.6 127 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ff0d2c6c-9fc6-4c2f-897a-96683d5fb3c4")
+		(property "Reference" "FID1"
+			(at 358.14 125.7299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Fiducial"
+			(at 358.14 128.2699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "no_components_footprints:Fiducial_0.5mm_Mask1mm"
+			(at 355.6 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 355.6 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "Fiducial Marker"
+			(at 355.6 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(instances
+			(project ""
+				(path "/26ddf1b8-aee4-468d-a26c-7bd63f3a2989"
+					(reference "FID1")
 					(unit 1)
 				)
 			)
