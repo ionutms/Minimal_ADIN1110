@@ -2,38 +2,15 @@
   "jobs": [
     {
       "description": "",
-      "id": "01cb76b8-6e86-47ad-aba2-6dc98993a30b",
+      "id": "e4d6ec96-bcb9-4d31-ba80-a443ddfeef76",
       "settings": {
-        "board_only": false,
-        "board_outlines_chaining_epsilon": 0.01,
-        "cut_vias_in_body": false,
+        "command": "kicad-cli pcb export glb minimal_adin1110.kicad_pcb --include-tracks --include-pads --include-zones --include-silkscreen --include-soldermask --fill-all-vias --cut-vias-in-body",
         "description": "",
-        "export_board_body": true,
-        "export_components": true,
-        "export_inner_copper": false,
-        "export_pads": false,
-        "export_silkscreen": true,
-        "export_soldermask": true,
-        "export_tracks": false,
-        "export_zones": false,
-        "fill_all_vias": false,
-        "format": "brep",
-        "fuse_shapes": false,
-        "include_dnp": true,
-        "include_unspecified": true,
-        "occt_format": 1,
-        "optimize_step": true,
-        "output_filename": "minimal_adin1110.glb",
-        "overwrite": false,
-        "subst_models": true,
-        "use_drill_origin": false,
-        "use_grid_origin": false,
-        "user_origin.x": 136.589,
-        "user_origin.y": 83.947,
-        "vrml_model_dir": "",
-        "vrml_relative_paths": false
+        "ignore_exit_code": false,
+        "output_filename": "",
+        "record_output": true
       },
-      "type": "pcb_export_3d"
+      "type": "special_execute"
     },
     {
       "description": "",
