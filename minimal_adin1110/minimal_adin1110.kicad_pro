@@ -514,7 +514,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "minimal_adin1110.glb",
+      "step": "minimal_adin1110.step",
       "svg": "",
       "vrml": "minimal_adin1110.wrl"
     },
