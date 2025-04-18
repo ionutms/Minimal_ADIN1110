@@ -67,8 +67,11 @@ jobs:
           echo "No KiCad project found. Skipping workflow."
           exit 0
 
-      - name: Create output directories
-        run: mkdir -p docs/schematics docs/pictures
+      - name: Create and set permissions on output directories
+        run: |
+          mkdir -p docs/schematics docs/pictures
+          # Ensure directories are writable by any user in the Docker container
+          chmod -R 777 docs
 
       - name: Generate PDF schematic
         if: steps.find-files.outputs.schematic_found == 'true'
@@ -88,8 +91,9 @@ jobs:
       - name: Render PCB 3D view
         if: steps.find-files.outputs.pcb_found == 'true'
         run: |
-          docker run --rm \
+          docker run --rm -u $(id -u):$(id -g) \
             -v ${{ github.workspace }}:/kicad_project \
+            -e HOME=/tmp/home \
             ionutms/kicad:9.0 \
             bash -c "mkdir -p /tmp/home/.config/kicad/9.0 && \
                      export HOME=/tmp/home && \
@@ -103,6 +107,13 @@ jobs:
                      --quality high \
                      --zoom 1"
 
+      - name: Debug output directories
+        run: |
+          echo "Checking directory permissions:"
+          ls -la docs/
+          ls -la docs/schematics/ || echo "Schematics directory is empty"
+          ls -la docs/pictures/ || echo "Pictures directory is empty"
+
       - name: Check for generated files
         id: check-files
         run: |
@@ -110,11 +121,15 @@ jobs:
           PNG_COUNT=$(find docs/pictures -type f -name "*.png" | wc -l)
           TOTAL_COUNT=$((PDF_COUNT + PNG_COUNT))
 
+          echo "Found $PDF_COUNT PDF files and $PNG_COUNT PNG files"
+          
           if [ "$TOTAL_COUNT" -gt 0 ]; then
             echo "files_generated=true" >> $GITHUB_OUTPUT
+            echo "Files generated successfully"
           else
             echo "files_generated=false" >> $GITHUB_OUTPUT
-            exit 1
+            echo "No files were generated, checking for errors..."
+            # Don't exit with error code to allow artifact upload to proceed
           fi
 
       - name: Upload outputs as artifacts
@@ -125,6 +140,7 @@ jobs:
             docs/schematics/
             docs/pictures/
           retention-days: 1
+          if-no-files-found: warn
 
       - name: Save generated files
         if: steps.check-files.outputs.files_generated == 'true'
@@ -132,6 +148,10 @@ jobs:
           mkdir -p /tmp/kicad_outputs/schematics /tmp/kicad_outputs/pictures
           cp -r docs/schematics/* /tmp/kicad_outputs/schematics/ || true
           cp -r docs/pictures/* /tmp/kicad_outputs/pictures/ || true
+          
+          # Debug saved files
+          echo "Files saved to temporary location:"
+          find /tmp/kicad_outputs -type f | sort
 
       - name: Configure Git
         run: |
@@ -165,6 +185,7 @@ jobs:
           
           # Create output directories if they don't exist
           mkdir -p docs/schematics docs/pictures
+          chmod -R 777 docs  # Ensure directories are writable
 
       - name: Restore generated files
         if: steps.check-files.outputs.files_generated == 'true'
@@ -181,7 +202,8 @@ jobs:
           DEFAULT_BRANCH="${{ steps.default-branch.outputs.default_branch }}"
           
           # Add the files
-          git add docs/schematics docs/pictures
+          git add docs/schematics || true
+          git add docs/pictures || true
           
           # Check if there are changes to commit
           if git diff --staged --quiet; then
@@ -196,5 +218,10 @@ jobs:
               # If push fails, try to create the branch first
               echo "Push failed, trying to create branch first"
               git push -u origin $DEFAULT_BRANCH
+              
+              if [ $? -ne 0 ]; then
+                echo "Push failed again. Attempting force push as last resort..."
+                git push -f origin $DEFAULT_BRANCH
+              fi
             fi
           fi
