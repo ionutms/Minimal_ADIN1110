@@ -3,11 +3,16 @@ on:
   push:
     branches: [ doc_workflow ]
   workflow_dispatch:
+    inputs:
+      zoom_factor:
+        description: 'Zoom factor for PCB 3D view rendering'
+        required: false
+        default: '0.5'
+        type: string
 
 jobs:
   generate-kicad-outputs:
     runs-on: ubuntu-latest
-    # Add permission to allow pushing to the repository
     permissions:
       contents: write
 
@@ -91,6 +96,10 @@ jobs:
       - name: Render PCB 3D view
         if: steps.find-files.outputs.pcb_found == 'true'
         run: |
+          # Get zoom factor parameter with fallback for when triggered by push
+          ZOOM_FACTOR="${{ github.event.inputs.zoom_factor || '1' }}"
+          echo "Using zoom factor: $ZOOM_FACTOR"
+          
           docker run --rm -u $(id -u):$(id -g) \
             -v ${{ github.workspace }}:/kicad_project \
             -e HOME=/tmp/home \
@@ -105,7 +114,7 @@ jobs:
                      -o /kicad_project/docs/pictures/${{ steps.find-files.outputs.project_name }}_side.png \
                      --background transparent \
                      --quality high \
-                     --zoom 1"
+                     --zoom $ZOOM_FACTOR"
 
       - name: Debug output directories
         run: |
