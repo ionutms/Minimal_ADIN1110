@@ -7,10 +7,15 @@ on:
 jobs:
   generate-kicad-outputs:
     runs-on: ubuntu-latest
+    # Add permission to allow pushing to the repository
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for proper branch management
 
       - name: Find KiCad project files
         id: find-files
@@ -128,34 +133,68 @@ jobs:
           cp -r docs/schematics/* /tmp/kicad_outputs/schematics/ || true
           cp -r docs/pictures/* /tmp/kicad_outputs/pictures/ || true
 
-      - name: Checkout main branch
-        if: github.event_name == 'push' && github.ref == 'refs/heads/output_generation' && steps.check-files.outputs.files_generated == 'true'
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-
-      - name: Restore files to main branch
+      - name: Configure Git
         run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Determine default branch
+        id: default-branch
+        if: steps.check-files.outputs.files_generated == 'true'
+        run: |
+          # Get the default branch name from the repository
+          DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
+          echo "default_branch=$DEFAULT_BRANCH" >> $GITHUB_OUTPUT
+          echo "Default branch is: $DEFAULT_BRANCH"
+
+      - name: Prepare branch for outputs
+        if: steps.check-files.outputs.files_generated == 'true'
+        run: |
+          # Determine if we're using main or master
+          DEFAULT_BRANCH="${{ steps.default-branch.outputs.default_branch }}"
+          
+          # Check if the default branch exists
+          if git show-ref --verify --quiet refs/remotes/origin/$DEFAULT_BRANCH; then
+            echo "Default branch $DEFAULT_BRANCH exists, checking it out"
+            git fetch origin $DEFAULT_BRANCH
+            git checkout $DEFAULT_BRANCH
+          else
+            echo "Default branch does not exist yet, creating it"
+            git checkout -b $DEFAULT_BRANCH
+          fi
+          
+          # Create output directories if they don't exist
           mkdir -p docs/schematics docs/pictures
+
+      - name: Restore generated files
+        if: steps.check-files.outputs.files_generated == 'true'
+        run: |
           cp -r /tmp/kicad_outputs/schematics/* docs/schematics/ || true
           cp -r /tmp/kicad_outputs/pictures/* docs/pictures/ || true
           echo "Final output contents:"
           ls -la docs/schematics/ || true
           ls -la docs/pictures/ || true
 
-      - name: Configure Git
+      - name: Commit and push changes
+        if: steps.check-files.outputs.files_generated == 'true'
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-
-      - name: Commit outputs to main branch
-        run: |
-          git add docs/schematics || true
-          git add docs/pictures || true
+          DEFAULT_BRANCH="${{ steps.default-branch.outputs.default_branch }}"
+          
+          # Add the files
+          git add docs/schematics docs/pictures
+          
+          # Check if there are changes to commit
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
+            echo "Committing changes"
             git commit -m "Update KiCad documentation (schematics and PCB renders)"
-            git push origin main
+            
+            # Push with error handling
+            echo "Pushing to $DEFAULT_BRANCH branch"
+            if ! git push origin $DEFAULT_BRANCH; then
+              # If push fails, try to create the branch first
+              echo "Push failed, trying to create branch first"
+              git push -u origin $DEFAULT_BRANCH
+            fi
           fi
