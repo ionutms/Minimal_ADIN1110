@@ -96,8 +96,8 @@ jobs:
       - name: Render PCB 3D view
         if: steps.find-files.outputs.pcb_found == 'true'
         run: |
-          # Get zoom factor parameter with fallback for when triggered by push
-          ZOOM_FACTOR="${{ github.event.inputs.zoom_factor || '1' }}"
+          # Use zoom factor parameter from inputs
+          ZOOM_FACTOR="${{ github.event.inputs.zoom_factor }}"
           echo "Using zoom factor: $ZOOM_FACTOR"
           
           docker run --rm -u $(id -u):$(id -g) \
