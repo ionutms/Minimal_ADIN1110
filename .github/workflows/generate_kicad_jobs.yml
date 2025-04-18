@@ -3,12 +3,9 @@ on:
   push:
     branches: [ doc_workflow ]
   workflow_dispatch:
-    inputs:
-      zoom_factor:
-        description: 'Zoom factor for PCB 3D view rendering'
-        required: false
-        default: '0.5'
-        type: string
+
+env:
+  DEFAULT_ZOOM_FACTOR: '0.5'
 
 jobs:
   generate-kicad-outputs:
@@ -93,11 +90,19 @@ jobs:
                      '/kicad_project/${{ steps.find-files.outputs.schematic_file }}' && \
                      cp /tmp/schematic.pdf '/kicad_project/docs/schematics/${{ steps.find-files.outputs.project_name }}_schematic.pdf'"
 
+      - name: Set zoom factor
+        id: set-zoom
+        run: |
+          # Always use the default zoom factor defined in env
+          ZOOM_FACTOR="${{ env.DEFAULT_ZOOM_FACTOR }}"
+          echo "zoom_factor=$ZOOM_FACTOR" >> $GITHUB_OUTPUT
+          echo "Using zoom factor: $ZOOM_FACTOR"
+
       - name: Render PCB 3D view
         if: steps.find-files.outputs.pcb_found == 'true'
         run: |
-          # Use zoom factor parameter from inputs
-          ZOOM_FACTOR="${{ github.event.inputs.zoom_factor }}"
+          # Use zoom factor from previous step
+          ZOOM_FACTOR="${{ steps.set-zoom.outputs.zoom_factor }}"
           echo "Using zoom factor: $ZOOM_FACTOR"
           
           docker run --rm -u $(id -u):$(id -g) \
